@@ -1,13 +1,14 @@
 import customtkinter as ctk
 from src.views.login_cadastro_view import LoginCadastroView
 from src.views.login_view import LoginView
+from src.views.cadastro_usuario_view import CadastroUsuarioView
 
 class AppView(ctk.CTk):
     def __init__(self):
         super().__init__()
 
         self.title("Sistema Comunitário de Livros da UnB")
-        self.geometry("800x600")
+        self.geometry("900x900")
 
         self.current_frame = None
 
@@ -25,3 +26,6 @@ class AppView(ctk.CTk):
 
     def show_login(self):
         self.show_frame(LoginView)
+
+    def show_cadastro_usuario(self):
+        self.show_frame(CadastroUsuarioView)

@@ -1,4 +1,5 @@
 from src.dao.usuario_dao import UsuarioDAO
+import bcrypt
 
 class AuthService:
     def __init__(self):
@@ -10,4 +11,7 @@ class AuthService:
         if not usuario:
             return False
         
-        return usuario["senha_hash"] == senha
+        return bcrypt.checkpw(
+            senha.encode("utf-8"),
+            usuario.senha_hash.encode("utf-8")
+        )

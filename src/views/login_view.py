@@ -9,7 +9,7 @@ class LoginView(ctk.CTkFrame):
 
         self.auth_controller = AuthController()
 
-        self.label_user = ctk.CTkLabel(self, text="Usuário")
+        self.label_user = ctk.CTkLabel(self, text="Email")
         self.label_user.pack()
 
         self.entry_user = ctk.CTkEntry(self)
@@ -40,4 +40,4 @@ class LoginView(ctk.CTkFrame):
         if result:
             self.label_msg.configure(text="Login OK")
         else:
-            self.label_msg.configure(text="Erro no login")
+            self.label_msg.configure(text="email ou senha incorreto")
