@@ -4,7 +4,7 @@ CREATE TABLE usuario (
   dt_nascimento DATE NOT NULL,
   email VARCHAR(255) NOT NULL,
   senha_hash VARCHAR(255) NOT NULL,
-  foto_documento BLOB NOT NULL,
+  foto_documento MEDIUMBLOB NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -95,6 +95,30 @@ CREATE TABLE historico_catalogo (
   PRIMARY KEY (ts_acao, livro, acao)
 ) ENGINE=InnoDB;
 
+CREATE TABLE curso (
+  id INT NOT NULL,
+  nome VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE departamento (
+  id INT NOT NULL,
+  nome VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE setor (
+  id INT NOT NULL,
+  nome VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE empresa (
+  id INT NOT NULL,
+  nome VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
 ALTER TABLE catalogo
 ADD CONSTRAINT fk_catalogo_usuario
 FOREIGN KEY (usuario_id) REFERENCES usuario(id);
@@ -139,17 +163,33 @@ ALTER TABLE aluno
 ADD CONSTRAINT fk_aluno_usuario
 FOREIGN KEY (id_usuario) REFERENCES usuario(id);
 
+ALTER TABLE aluno
+ADD CONSTRAINT fk_aluno_curso
+FOREIGN KEY (curso) REFERENCES curso(id);
+
 ALTER TABLE professor
 ADD CONSTRAINT fk_professor_usuario
 FOREIGN KEY (id_usuario) REFERENCES usuario(id);
+
+ALTER TABLE professor
+ADD CONSTRAINT fk_professor_departamento
+FOREIGN KEY (departamento) REFERENCES departamento(id);
 
 ALTER TABLE servidor
 ADD CONSTRAINT fk_servidor_usuario
 FOREIGN KEY (id_usuario) REFERENCES usuario(id);
 
+ALTER TABLE servidor
+ADD CONSTRAINT fk_servidor_setor
+FOREIGN KEY (setor) REFERENCES setor(id);
+
 ALTER TABLE terceirizado
 ADD CONSTRAINT fk_terceirizado_usuario
 FOREIGN KEY (id_usuario) REFERENCES usuario(id);
+
+ALTER TABLE terceirizado
+ADD CONSTRAINT fk_terceirizado_empresa
+FOREIGN KEY (empresa) REFERENCES empresa(id);
 
 ALTER TABLE historico_catalogo
 ADD CONSTRAINT fk_historico_acao
