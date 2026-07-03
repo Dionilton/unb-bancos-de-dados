@@ -5,3 +5,9 @@ VALUES
 	(3, 'Computação'),
 	(4, 'Engenharia de Software'),
 	(5, 'Inteligência Artificial')
+
+INSERT INTO departamento
+VALUES
+	(1, 'CIC'),
+	(2, 'MAT'),
+	(3, 'EST')

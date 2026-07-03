@@ -5,6 +5,7 @@ from PIL import Image
 from src.controllers.cadastro_usuario_controller import CadastroUsuarioController
 from src.controllers.cadastro_perfil_controller import CadastroPerfilController
 from src.controllers.curso_controller import CursoController
+from src.controllers.departamento_controller import DepartamentoController
 
 class CadastroUsuarioView(ctk.CTkFrame):
     def __init__(self, master):
@@ -21,6 +22,14 @@ class CadastroUsuarioView(ctk.CTkFrame):
         self.cursos_por_nome = {
             curso.nome: curso.id
             for curso in self.lista_cursos
+        }
+
+        self.departamento_controller = DepartamentoController()
+        self.lista_departamento = self.departamento_controller.listar()
+
+        self.departamento_por_nome = {
+            departamento.nome: departamento.id
+            for departamento in self.lista_departamento
         }
 
 
@@ -135,7 +144,7 @@ class CadastroUsuarioView(ctk.CTkFrame):
             self.btnCadastrar.configure(state="disabled")
             self.perfil.configure(state="disabled")    
 
-            self.completarCadastro = ctk.CTkLabel(self, text="Dados conmfirmados, complete seu cadastro")
+            self.completarCadastro = ctk.CTkLabel(self, text="Dados confirmados, complete seu cadastro")
             self.completarCadastro.pack(fill="both")
 
             match selecao:
@@ -156,11 +165,25 @@ class CadastroUsuarioView(ctk.CTkFrame):
                     self.btnFinalizar = ctk.CTkButton(
                         self,
                         text = "FINALIZAR CADASTRO",
-                        command = lambda: self.finalizar_cadastro(matricula = int(self.entry_matricula.get()), curso = self.cursos_por_nome[self.cursosSelecionado.get()], email = self.entry_email.get())
+                        command = lambda: self.finalizar_cadastro(matricula = int(self.entry_matricula.get()), curso = self.cursos_por_nome[self.cursosSelecionado.get()], email = self.entry_email.get(), perfil = self.perfil.get())
                     )
                     self.btnFinalizar.pack(fill="both")
                 case "Professor":
-                    print("show campos professor")
+                    self.label_departamento = ctk.CTkLabel(self, text="Departamento:")
+                    self.label_departamento.pack(fill="both")
+                    self.departamentoSelecionado = ctk.CTkComboBox(
+                        self,
+                        values=[departamento.nome for departamento in self.lista_departamento]
+                    )
+                    self.departamentoSelecionado.pack(fill="both")
+
+                    self.btnFinalizar = ctk.CTkButton(
+                        self,
+                        text = "FINALIZAR CADASTRO",
+                        command = lambda: self.finalizar_cadastro(departamento =  self.departamento_por_nome[self.departamentoSelecionado.get()], email = self.entry_email.get(), perfil = self.perfil.get())
+                    )
+                    self.btnFinalizar.pack(fill="both")
+                    
                 case "Servidor":
                     print("show campos servidor")
                 case "Terceirizado":

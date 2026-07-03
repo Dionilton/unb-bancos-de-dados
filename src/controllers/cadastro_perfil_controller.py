@@ -5,5 +5,10 @@ class CadastroPerfilController:
         self.cadastro_perfil_service = CadastroPerfilService()
 
     def cadastrar(self, **kwargs):
-        if kwargs["matricula"] != None:
-            self.cadastro_perfil_service.cadastarAluno(kwargs["matricula"], kwargs["curso"], kwargs["email"])
+
+        match kwargs["perfil"]:
+            case 'Aluno':
+                self.cadastro_perfil_service.cadastarAluno(kwargs["matricula"], kwargs["curso"], kwargs["email"])
+        
+            case 'Professor':
+                self.cadastro_perfil_service.cadastarProfessor(kwargs["departamento"], kwargs["email"])
