@@ -13,3 +13,5 @@ class CadastroPerfilController:
                 self.cadastro_perfil_service.cadastarProfessor(kwargs["departamento"], kwargs["email"])
             case 'Servidor':
                 self.cadastro_perfil_service.cadastrarServidor(kwargs["setor"], kwargs["email"])
+            case 'Terceirizado':
+                 self.cadastro_perfil_service.cadastrarEmpresa(kwargs["empresa"], kwargs['matricula_empresa'], kwargs["email"])

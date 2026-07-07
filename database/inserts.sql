@@ -17,3 +17,9 @@ VALUES
 	(1, 'Reitoria'),
 	(2, 'BCE'),
 	(3, 'Departamento de Ciência da Computação')
+
+INSERT INTO empresa
+VALUES
+	(1, 'Ágil Serviços Especiais LTDA'),
+	(2, 'Honix Elevadores'),
+	(3, 'ISM Gomes de Mattos Eireli')

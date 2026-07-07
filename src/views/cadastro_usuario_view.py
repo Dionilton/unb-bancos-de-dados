@@ -7,6 +7,7 @@ from src.controllers.cadastro_perfil_controller import CadastroPerfilController
 from src.controllers.curso_controller import CursoController
 from src.controllers.departamento_controller import DepartamentoController
 from src.controllers.setor_controller import SetorController
+from src.controllers.empresa_controller import EmpresaController
 
 class CadastroUsuarioView(ctk.CTkFrame):
     def __init__(self, master):
@@ -39,6 +40,14 @@ class CadastroUsuarioView(ctk.CTkFrame):
         self.setor_por_nome = {
             setor.nome: setor.id
             for setor in self.lista_setor
+        }
+
+        self.empresa_controller = EmpresaController()
+        self.lista_empresa = self.empresa_controller.listar()
+
+        self.empresa_por_nome = {
+            empresa.nome: empresa.id
+            for empresa in self.lista_empresa
         }
 
         
@@ -208,7 +217,25 @@ class CadastroUsuarioView(ctk.CTkFrame):
                     )
                     self.btnFinalizar.pack(fill="both")
                 case "Terceirizado":
-                    print("show campos terceirizado")
+                    self.label_empresa = ctk.CTkLabel(self, text="Empresa")
+                    self.label_empresa.pack(fill="both")
+                    self.empresaSelecionado = ctk.CTkComboBox(
+                        self,
+                        values=[empresa.nome for empresa in self.lista_empresa]
+                    )
+                    self.empresaSelecionado.pack(fill="both")
+
+                    self.label_empresa_matricula = ctk.CTkLabel(self, text="Matrícula na empresa:")
+                    self.label_empresa_matricula.pack(fill="both")
+                    self.entry_empresa_matricula = ctk.CTkEntry(self)
+                    self.entry_empresa_matricula.pack(fill="both")
+
+                    self.btnFinalizar = ctk.CTkButton(
+                        self,
+                        text = "FINALIZAR CADASTRO",
+                        command = lambda: self.finalizar_cadastro(empresa =  self.empresa_por_nome[self.empresaSelecionado.get()], matricula_empresa = self.entry_empresa_matricula.get(), email = self.entry_email.get(), perfil = self.perfil.get())
+                    )
+                    self.btnFinalizar.pack(fill="both")
 
             
     def navegar_para_login(self):
