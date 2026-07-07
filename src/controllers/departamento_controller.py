@@ -6,3 +6,4 @@ class DepartamentoController:
 
     def listar(self):
         return self.service.listar()
+    

@@ -9,6 +9,7 @@ class CadastroPerfilController:
         match kwargs["perfil"]:
             case 'Aluno':
                 self.cadastro_perfil_service.cadastarAluno(kwargs["matricula"], kwargs["curso"], kwargs["email"])
-        
             case 'Professor':
                 self.cadastro_perfil_service.cadastarProfessor(kwargs["departamento"], kwargs["email"])
+            case 'Servidor':
+                self.cadastro_perfil_service.cadastrarServidor(kwargs["setor"], kwargs["email"])

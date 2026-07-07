@@ -11,3 +11,9 @@ VALUES
 	(1, 'CIC'),
 	(2, 'MAT'),
 	(3, 'EST')
+
+INSERT INTO setor
+VALUES
+	(1, 'Reitoria'),
+	(2, 'BCE'),
+	(3, 'Departamento de Ciência da Computação')

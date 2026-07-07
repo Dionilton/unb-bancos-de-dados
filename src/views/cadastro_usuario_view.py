@@ -6,6 +6,7 @@ from src.controllers.cadastro_usuario_controller import CadastroUsuarioControlle
 from src.controllers.cadastro_perfil_controller import CadastroPerfilController
 from src.controllers.curso_controller import CursoController
 from src.controllers.departamento_controller import DepartamentoController
+from src.controllers.setor_controller import SetorController
 
 class CadastroUsuarioView(ctk.CTkFrame):
     def __init__(self, master):
@@ -32,6 +33,13 @@ class CadastroUsuarioView(ctk.CTkFrame):
             for departamento in self.lista_departamento
         }
 
+        self.setor_controller = SetorController()
+        self.lista_setor = self.setor_controller.listar()
+
+        self.setor_por_nome = {
+            setor.nome: setor.id
+            for setor in self.lista_setor
+        }
 
         
         self.label_perfil = ctk.CTkLabel(self, text="Selecione seu perfil:")
@@ -185,7 +193,20 @@ class CadastroUsuarioView(ctk.CTkFrame):
                     self.btnFinalizar.pack(fill="both")
                     
                 case "Servidor":
-                    print("show campos servidor")
+                    self.label_setor = ctk.CTkLabel(self, text="Setor:")
+                    self.label_setor.pack(fill="both")
+                    self.setorSelecionado = ctk.CTkComboBox(
+                        self,
+                        values=[setor.nome for setor in self.lista_setor]
+                    )
+                    self.setorSelecionado.pack(fill="both")
+
+                    self.btnFinalizar = ctk.CTkButton(
+                        self,
+                        text = "FINALIZAR CADASTRO",
+                        command = lambda: self.finalizar_cadastro(setor =  self.setor_por_nome[self.setorSelecionado.get()], email = self.entry_email.get(), perfil = self.perfil.get())
+                    )
+                    self.btnFinalizar.pack(fill="both")
                 case "Terceirizado":
                     print("show campos terceirizado")
 
