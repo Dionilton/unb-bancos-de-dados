@@ -113,7 +113,6 @@ class CadastroUsuarioView(ctk.CTkFrame):
 
         if arquivo:
             self.caminho_imagem = arquivo
-            print("Imagem selecionada: ", arquivo)
 
             self.label_imagem = ctk.CTkLabel(self, text="")
             self.label_imagem.pack(fill="both")

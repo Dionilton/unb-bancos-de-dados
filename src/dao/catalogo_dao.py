@@ -17,7 +17,8 @@ class CatalogoDAO:
         for livro in registros:
             livros.append(
                 Livro(
-                    id=livro["id"],
+                    catId=livro["catId"],
+                    userId=livro["userId"],
                     nome=livro["nome"],
                     titulo=livro["titulo"],
                     descricao=livro["descricao"],
@@ -27,6 +28,5 @@ class CatalogoDAO:
 
         cursor.close()
         conn.close()
-
-        print(livros)
+        
         return livros

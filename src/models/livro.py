@@ -2,7 +2,8 @@ from dataclasses import dataclass
 
 @dataclass
 class Livro:
-    id: int
+    catId: int
+    userId: int
     nome: str
     titulo: str
     descricao: str

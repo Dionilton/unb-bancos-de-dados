@@ -45,6 +45,5 @@ class LoginView(ctk.CTkFrame):
             self.label_msg.configure(text="email ou senha incorreto")
 
     def navega_para_area_logada(self):
-        print(self.entry_user.get())
         self.master.usuario_logado = self.usuario_dao.find_by_email(self.entry_user.get()).id
         self.master.show_area_logada()

@@ -53,7 +53,7 @@ class AreaLogadaView(ctk.CTkFrame):
 
             id = ctk.CTkLabel(
                 item,
-                text=livro.id
+                text=livro.catId
             )
             id.pack(
                 side="left",
@@ -98,11 +98,14 @@ class AreaLogadaView(ctk.CTkFrame):
 
             btn = ctk.CTkButton(
                 item,
-                text="Obter Livro",
+                text="Obter Livro" if livro.userId != self.master.usuario_logado else 'Meu Livro',
+                fg_color= "#b9394a" if livro.userId == self.master.usuario_logado else "#1b8529",
                 width=120,
-                command= self.doacao
+                command= self.doacao,
+                state = 'disable' if livro.userId == self.master.usuario_logado else 'normal'
             )
             btn.pack(side="right", padx=10)
 
     def doacao(self):
         print(self.master.usuario_logado)
+
