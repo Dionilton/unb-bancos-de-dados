@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from src.controllers.auth_controller import AuthController
+from src.dao.usuario_dao import UsuarioDAO
 
 class LoginView(ctk.CTkFrame):
     def __init__(self, master):
@@ -8,6 +9,7 @@ class LoginView(ctk.CTkFrame):
         self.master = master
 
         self.auth_controller = AuthController()
+        self.usuario_dao = UsuarioDAO()
 
         self.label_user = ctk.CTkLabel(self, text="Email")
         self.label_user.pack()
@@ -38,6 +40,11 @@ class LoginView(ctk.CTkFrame):
         result = self.auth_controller.login(email, senha)
 
         if result:
-            self.label_msg.configure(text="Login OK")
+            self.navega_para_area_logada()
         else:
             self.label_msg.configure(text="email ou senha incorreto")
+
+    def navega_para_area_logada(self):
+        print(self.entry_user.get())
+        self.master.usuario_logado = self.usuario_dao.find_by_email(self.entry_user.get()).id
+        self.master.show_area_logada()
