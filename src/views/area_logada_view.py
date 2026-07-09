@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from src.controllers.catalogo_controller import CatalogoController
+from src.controllers.doacao_controller import DoacaoController
 
 class AreaLogadaView(ctk.CTkFrame):
     def __init__(self, master):
@@ -8,18 +9,35 @@ class AreaLogadaView(ctk.CTkFrame):
         self.master = master
 
         self.catalogo_controller = CatalogoController()
+        self.doacao_controller = DoacaoController()
+
+        self.label_titulo = ctk.CTkLabel(self, text="Insira o título do livro:")
+        self.label_titulo.pack(fill="both")
+        self.entry_titulo = ctk.CTkEntry(self)
+        self.entry_titulo.pack(fill="both")
+
+        self.label_categoria = ctk.CTkLabel(self, text="Categoria:")
+        self.label_categoria.pack()
+        self.categoriaSelecionado = ctk.CTkComboBox(
+            self,
+            values=['doação', 'emprestimo', 'troca']
+        )
+        self.categoriaSelecionado.pack(fill="both")
 
         self.btn_cadastro_livro = ctk.CTkButton(
             self,
             text='Cadastrar Livro',
-            #command=self.navegar_para_cadastro_livro
+            command=lambda: self.cadastrar_livro(idUser = self.master.usuario_logado, titulo=self.entry_titulo.get())
         )
         self.btn_cadastro_livro.pack(pady=25)
+
+        self.label_retorno_cadastro = ctk.CTkLabel(self, text="")
+        self.label_retorno_cadastro.pack(fill="both")
 
         self.btn_consulta_catalogo = ctk.CTkButton(
             self,
             text='Atualizar Catalogo',
-            #command=self.navegar_para_cadastro
+            command=self.atualizar_catalogo
         )
         self.btn_consulta_catalogo.pack(pady=25)
 
@@ -98,14 +116,28 @@ class AreaLogadaView(ctk.CTkFrame):
 
             btn = ctk.CTkButton(
                 item,
-                text="Obter Livro" if livro.userId != self.master.usuario_logado else 'Meu Livro',
-                fg_color= "#b9394a" if livro.userId == self.master.usuario_logado else "#1b8529",
+                text="Obter Livro" if livro.userId != self.master.usuario_logado else "Meu Livro",
+                fg_color="#b9394a" if livro.userId == self.master.usuario_logado else "#1b8529",
                 width=120,
-                command= self.doacao,
-                state = 'disable' if livro.userId == self.master.usuario_logado else 'normal'
+                command=lambda l=livro: self.doacao(
+                    livro=l.catId,
+                    usuario_a=l.userId,
+                    usuario_b=self.master.usuario_logado
+                ),
+                state="disabled" if livro.userId == self.master.usuario_logado else "normal"
             )
             btn.pack(side="right", padx=10)
 
-    def doacao(self):
-        print(self.master.usuario_logado)
+    def doacao(self, livro, usuario_a, usuario_b):
+        self.doacao_controller.insert(livro, usuario_a, usuario_b)
+
+    def cadastrar_livro(self, idUser, titulo):
+        self.catalogo_controller.cadastrar_livro(idUser, titulo)
+        self.label_retorno_cadastro.configure(text="livro cadastrado com sucesso")
+
+    def atualizar_catalogo(self):
+        for widget in self.lista_clientes.winfo_children():
+            widget.destroy()
+
+        self.carregar_catalogo()
 

@@ -6,3 +6,6 @@ class CatalogoController:
 
     def listar(self):
         return self.catalogo_dao.listar()
+    
+    def cadastrar_livro(self, idUser, titulo):
+        self.catalogo_dao.cadastrar(idUser, titulo)
